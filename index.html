@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>links</title>
+    
+    <!-- ===== ФАВИКОН (ВАШ АВАТАР) ===== -->
+    <link rel="icon" href="https://avatars.githubusercontent.com/u/240462453?s=400&u=933cff916d1c158a0197884b3cb0a59ad77e40d7&v=4">
+    <link rel="apple-touch-icon" href="https://avatars.githubusercontent.com/u/240462453?s=400&u=933cff916d1c158a0197884b3cb0a59ad77e40d7&v=4">
+    <meta name="theme-color" content="#7c5dff">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ===== CSS VARIABLES ===== */
+        :root {
+            /* Темная тема (по умолчанию) */
+            --bg-gradient-dark: linear-gradient(145deg, #0a0a0a 0%, #0f0f12 50%, #14141b 100%);
+            --surface-dark: rgba(30, 30, 40, 0.65);
+            --surface-border-dark: rgba(80, 80, 100, 0.12);
+            --text-dark: #f8f9ff;
+            --text-muted-dark: #a0a6bd;
+            --accent-dark: #7c5dff;
+            --accent-glow-dark: rgba(124, 93, 255, 0.15);
+            
+            /* Светлая тема */
+            --bg-gradient-light: linear-gradient(145deg, #ffffff 0%, #f8f9ff 50%, #f0f2f8 100%);
+            --surface-light: rgba(255, 255, 255, 0.75);
+            --surface-border-light: rgba(0, 0, 0, 0.08);
+            --text-light: #111422;
+            --text-muted-light: #666d85;
+            --accent-light: #634bff;
+            --accent-glow-light: rgba(99, 75, 255, 0.12);
+            
+            /* Общие */
+            --transition: all 0.32s cubic-bezier(0.22, 0.61, 0.36, 1);
+            --transition-fast: all 0.18s ease;
+        }
+
+        /* ===== БАЗОВЫЕ СТИЛИ ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-gradient-dark);
+            color: var(--text-dark);
+            line-height: 1.55;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+            overflow-x: hidden;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        /* Фоновое изображение */
+        .background-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: -2;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .background-image.active {
+            opacity: 1;
+        }
+
+        /* Шум для текстуры */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Светлая тема - уменьшаем шум */
+        body.light::before {
+            opacity: 0.01;
+        }
+
+        .page {
+            width: 100%;
+            max-width: 440px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            /* Добавляем фон для контейнера в темной теме */
+            background: white;
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        body.light .page {
+            background: black;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ===== ЗАЩИЩЁННЫЙ АВАТАР ===== */
+        .avatar {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, rgba(40, 40, 60, 0.9), rgba(25, 25, 40, 0.95));
+            border: 1px solid var(--surface-border-dark);
+            margin: 0 auto 1.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-dark);
+            font-size: 2.1rem;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 0 24px var(--accent-glow-dark),
+                inset 0 0 12px rgba(0, 0, 0, 0.4);
+            transition: var(--transition);
+            /* Блокируем стандартные действия с изображением */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+        }
+
+        body.light .avatar {
+            background: linear-gradient(145deg, rgba(240, 242, 250, 0.95), rgba(255, 255, 255, 0.98));
+            border-color: var(--surface-border-light);
+            color: var(--text-light);
+            box-shadow: 
+                0 0 24px var(--accent-glow-light),
+                inset 0 0 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .avatar::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--accent-glow-dark) 0%, transparent 70%);
+            z-index: -1;
+            transition: var(--transition);
+        }
+
+        body.light .avatar::after {
+            background: radial-gradient(circle, var(--accent-glow-light) 0%, transparent 70%);
+        }
+
+        /* Контейнер для изображения с защитой */
+        .avatar-img-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            /* Блокируем взаимодействие с изображением */
+            pointer-events: none;
+            -webkit-user-drag: none;
+            -khtml-user-drag: none;
+            -moz-user-drag: none;
+            -o-user-drag: none;
+            user-drag: none;
+        }
+
+        /* Прозрачный оверлей для блокировки кликов */
+        .avatar-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            z-index: 2;
+            cursor: default;
+            /* Визуальная подсказка, что изображение защищено */
+            background: radial-gradient(circle at center, transparent 60%, rgba(0,0,0,0.03) 100%);
+        }
+
+        /* ===== ТИПОГРАФИКА ===== */
+        .name {
+            font-size: 2.1rem;
+            font-weight: 600;
+            letter-spacing: -0.025em;
+            margin-bottom: 0.35rem;
+            color: black; /* Черный в темной теме */
+            background: none;
+            -webkit-background-clip: unset;
+            -webkit-text-fill-color: black;
+            background-clip: unset;
+            transition: var(--transition);
+        }
+
+        body.light .name {
+            color: white; /* Белый в светлой теме */
+            -webkit-text-fill-color: white;
+        }
+
+        .bio {
+            color: #555; /* Темно-серый в темной теме */
+            font-size: 1.02rem;
+            font-weight: 300;
+            margin-bottom: 2.4rem;
+            line-height: 1.65;
+            transition: var(--transition);
+        }
+
+        body.light .bio {
+            color: #ccc; /* Светло-серый в светлой теме */
+        }
+
+        /* ===== ССЫЛКИ ===== */
+        .link {
+            display: block;
+            width: 100%;
+            padding: 1.05rem 1.4rem;
+            margin-bottom: 0.9rem;
+            text-align: left;
+            text-decoration: none;
+            color: black; /* Черный текст в темной теме */
+            font-weight: 500;
+            font-size: 1.02rem;
+            border-radius: 16px;
+            background: white; /* Белый фон в темной теме */
+            border: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        body.light .link {
+            background: black; /* Черный фон в светлой теме */
+            color: white; /* Белый текст в светлой теме */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .link:hover {
+            transform: translateY(-1.5px);
+            background: #f8f8f8; /* Светло-серый при наведении в темной теме */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        body.light .link:hover {
+            background: #1a1a1a; /* Темно-серый при наведении в светлой теме */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .link:active {
+            transform: translateY(0);
+            opacity: 0.95;
+        }
+
+        .link::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: var(--accent-dark);
+            opacity: 0;
+            transition: var(--transition);
+            border-radius: 16px 0 0 16px;
+        }
+
+        body.light .link::before {
+            background: var(--accent-light);
+        }
+
+        .link:hover::before {
+            opacity: 1;
+        }
+
+        /* Иконки */
+        .link-icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 14px;
+            vertical-align: middle;
+            opacity: 0.7;
+            transition: var(--transition);
+            /* Иконки будут наследовать цвет текста */
+        }
+
+        .link:hover .link-icon {
+            opacity: 1;
+            transform: scale(1.08);
+        }
+
+        /* ===== ФУТЕР ===== */
+        .footer {
+            margin-top: 2.8rem;
+            color: #777; /* Темно-серый в темной теме */
+            font-size: 0.82rem;
+            font-weight: 300;
+            opacity: 0.8;
+            transition: var(--transition);
+            letter-spacing: -0.01em;
+        }
+
+        body.light .footer {
+            color: #aaa; /* Светло-серый в светлой теме */
+        }
+
+        .footer:hover {
+            opacity: 1;
+            color: var(--accent-dark);
+        }
+
+        body.light .footer:hover {
+            color: var(--accent-light);
+        }
+
+        /* ===== КНОПКА НАСТРОЕК ===== */
+        .settings-toggle {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: var(--surface-dark);
+            border: 1px solid var(--surface-border-dark);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-dark);
+            font-size: 1.3rem;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            transition: var(--transition);
+            opacity: 0.9;
+        }
+
+        body.light .settings-toggle {
+            background: var(--surface-light);
+            border-color: var(--surface-border-light);
+            color: var(--text-light);
+        }
+
+        .settings-toggle:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        /* ===== МОДАЛЬНОЕ ОКНО НАСТРОЕК ===== */
+        .settings-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+        }
+
+        .settings-modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .settings-panel {
+            background: var(--surface-dark);
+            border: 1px solid var(--surface-border-dark);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: 24px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 420px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transform: translateY(20px);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .settings-modal.active .settings-panel {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        body.light .settings-panel {
+            background: var(--surface-light);
+            border-color: var(--surface-border-light);
+        }
+
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.8rem;
+            padding-bottom: 1.2rem;
+            border-bottom: 1px solid var(--surface-border-dark);
+        }
+
+        body.light .settings-header {
+            border-color: var(--surface-border-light);
+        }
+
+        .settings-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        body.light .settings-title {
+            color: var(--text-light);
+        }
+
+        .settings-close {
+            background: none;
+            border: none;
+            color: var(--text-muted-dark);
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-fast);
+        }
+
+        body.light .settings-close {
+            color: var(--text-muted-light);
+        }
+
+        .settings-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-dark);
+        }
+
+        body.light .settings-close:hover {
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--text-light);
+        }
+
+        .settings-section {
+            margin-bottom: 1.8rem;
+        }
+
+        .settings-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .settings-label {
+            display: block;
+            font-size: 0.92rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        body.light .settings-label {
+            color: var(--text-light);
+        }
+
+        /* Переключатель темы */
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.9rem 1.2rem;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 14px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        body.light .theme-toggle {
+            background: rgba(0, 0, 0, 0.04);
+        }
+
+        .theme-toggle:hover {
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        body.light .theme-toggle:hover {
+            background: rgba(0, 0, 0, 0.08);
+        }
+
+        .theme-label {
+            font-weight: 500;
+            font-size: 0.96rem;
+            color: var(--text-dark);
+        }
+
+        body.light .theme-label {
+            color: var(--text-light);
+        }
+
+        .theme-switch {
+            position: relative;
+            width: 52px;
+            height: 28px;
+        }
+
+        .theme-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .theme-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(145deg, #e8e9f0, #f5f6fa);
+            border-radius: 14px;
+            transition: var(--transition-fast);
+        }
+
+        body.light .theme-slider {
+            background: linear-gradient(145deg, #2d2d40, #3a3a50);
+        }
+
+        .theme-slider::before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 3px;
+            bottom: 3px;
+            background: linear-gradient(145deg, #8a8aa0, #a0a2b8);
+            border-radius: 50%;
+            transition: var(--transition-fast);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .theme-switch input:checked + .theme-slider {
+            background: linear-gradient(145deg, #c0c4d5, #d8dae5);
+        }
+
+        body.light .theme-switch input:checked + .theme-slider {
+            background: linear-gradient(145deg, #1e1e2a, #2a2a3a);
+        }
+
+        .theme-switch input:checked + .theme-slider::before {
+            transform: translateX(24px);
+            background: linear-gradient(145deg, #ffd700, #ffb800);
+        }
+
+        /* Загрузка фона */
+        .background-upload {
+            display: block;
+            width: 100%;
+            padding: 1.1rem;
+            background: rgba(0, 0, 0, 0.03);
+            border: 2px dashed var(--surface-border-light);
+            border-radius: 14px;
+            cursor: pointer;
+            text-align: center;
+            transition: var(--transition-fast);
+            color: var(--text-muted-light);
+            font-size: 0.92rem;
+            font-weight: 400;
+        }
+
+        body.light .background-upload {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--surface-border-dark);
+            color: var(--text-muted-dark);
+        }
+
+        .background-upload:hover {
+            border-color: var(--accent-light);
+            background: rgba(99, 75, 255, 0.05);
+        }
+
+        body.light .background-upload:hover {
+            border-color: var(--accent-dark);
+            background: rgba(124, 93, 255, 0.1);
+        }
+
+        .background-upload input {
+            display: none;
+        }
+
+        .background-preview {
+            margin-top: 1rem;
+            text-align: left;
+        }
+
+        .background-preview-label {
+            font-size: 0.84rem;
+            color: var(--text-muted-light);
+            margin-bottom: 0.6rem;
+            display: block;
+        }
+
+        body.light .background-preview-label {
+            color: var(--text-muted-dark);
+        }
+
+        .background-preview-image {
+            width: 100%;
+            height: 120px;
+            border-radius: 12px;
+            background-size: cover;
+            background-position: center;
+            background-color: rgba(0, 0, 0, 0.03);
+            border: 1px solid var(--surface-border-light);
+            display: none;
+        }
+
+        body.light .background-preview-image {
+            border-color: var(--surface-border-dark);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .background-preview-image.active {
+            display: block;
+        }
+
+        /* Кнопка сброса */
+        .reset-button {
+            width: 100%;
+            padding: 0.95rem;
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 14px;
+            color: var(--text-muted-light);
+            font-weight: 500;
+            font-size: 0.92rem;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        body.light .reset-button {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.15);
+            color: var(--text-muted-dark);
+        }
+
+        .reset-button:hover {
+            background: rgba(0, 0, 0, 0.1);
+            border-color: rgba(0, 0, 0, 0.2);
+        }
+
+        body.light .reset-button:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        /* ===== АНИМАЦИИ ===== */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(16px) scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .page {
+            animation: fadeIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+        }
+
+        .link {
+            opacity: 0;
+            transform: translateY(12px);
+            animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-fill-mode: forwards;
+        }
+
+        .link:nth-child(1) { animation-delay: 0.12s; }
+        .link:nth-child(2) { animation-delay: 0.18s; }
+        .link:nth-child(3) { animation-delay: 0.24s; }
+        .link:nth-child(4) { animation-delay: 0.30s; }
+        .link:nth-child(5) { animation-delay: 0.36s; }
+        .link:nth-child(6) { animation-delay: 0.42s; }
+        .link:nth-child(7) { animation-delay: 0.48s; }
+
+        /* ===== АДАПТИВНОСТЬ ===== */
+        @media (max-width: 480px) {
+            body {
+                padding: 1.5rem;
+            }
+
+            .settings-toggle {
+                bottom: 1.2rem;
+                right: 1.2rem;
+                width: 48px;
+                height: 48px;
+                font-size: 1.2rem;
+            }
+
+            .avatar {
+                width: 84px;
+                height: 84px;
+                font-size: 1.8rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .name {
+                font-size: 1.85rem;
+            }
+
+            .bio {
+                font-size: 0.96rem;
+                margin-bottom: 2.1rem;
+            }
+
+            .link {
+                padding: 0.95rem 1.25rem;
+                font-size: 0.98rem;
+                border-radius: 14px;
+            }
+
+            .footer {
+                margin-top: 2.4rem;
+                font-size: 0.78rem;
+            }
+
+            .settings-panel {
+                padding: 1.5rem;
+                border-radius: 20px;
+            }
+
+            .settings-title {
+                font-size: 1.3rem;
+            }
+            
+            .page {
+                padding: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Фоновое изображение -->
+    <div class="background-image" id="backgroundImage"></div>
+
+    <!-- Основной контент -->
+    <div class="page">
+        <div class="avatar">
+            <!-- Защищённый контейнер аватара -->
+            <div class="avatar-img-container">
+                <img src="https://avatars.githubusercontent.com/u/240462453?s=400&u=933cff916d1c158a0197884b3cb0a59ad77e40d7&v=4" alt="Neko1ay" class="avatar-img" draggable="false">
+            </div>
+            <div class="avatar-overlay"></div>
+        </div>
+        <div class="name">Neko1ay</div>
+        <div class="bio">Добро пожаловать, здесь все мои основные соцсети</div>
+
+        <a href="https://www.instagram.com/neko1ay" class="link" target="_blank">
+            <svg class="link-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.563.07 2.413.327 2.965.577.693.313 1.193.82 1.442 1.07.25.25.757.75 1.07 1.442.25.552.507 1.402.577 2.965.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.07 1.563-.327 2.413-.577 2.965-.313.693-.82 1.193-1.07 1.442-.25.25-.75.757-1.442 1.07-.552.25-1.402.507-2.965.577-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.563-.07-2.412-.327-2.965-.577-.693-.313-1.193-.82-1.442-1.07-.25-.25-.757-.75-1.07-1.442-.25-.552-.507-1.402-.577-2.965-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.07-1.563.327-2.413.577-2.965.313-.693.82-1.193 1.07-1.442.25-.25.75-.757 1.442-1.07.552-.25 1.402-.507 2.965-.577 1.266-.057 1.646-.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-1.628.073-2.675.328-3.478.68-1.007.44-1.742 1.175-2.182 2.182-.353.803-.608 1.85-.68 3.478-.058 1.28-.072 1.688-.072 4.948 0 3.259.014 3.668.072 4.948.073 1.627.328 2.674.68 3.478.44 1.007 1.175 1.742 2.182 2.182.803.353 1.85.608 3.478.68 1.28.058 1.688.072 4.948.072 3.259 0 3.668-.014 4.948-.072 1.627-.073 2.674-.328 3.478-.68 1.007-.44 1.742-1.175 2.182-2.182.353-.803.608-1.85.68-3.478.058-1.28.072-1.688.072-4.948 0-3.259-.014-3.667-.072-4.947-.073-1.628-.328-2.675-.68-3.478-.44-1.007-1.175-1.742-2.182-2.182-.803-.353-1.85-.608-3.478-.68-1.28-.058-1.688-.072-4.948-.072zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+            Instagram
+        </a>
+
+        <a href="https://t.me/nekoo1ay" class="link" target="_blank">
+            <svg class="link-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.39 13.44l-1.54 4.32c-.2.56-.77.94-1.35.94-.13 0-.26-.02-.38-.06L7 18.55c-.75-.25-1.26-.97-1.26-1.76 0-.26.06-.51.17-.74l3.25-7.62c.35-.82 1.17-1.36 2.06-1.36.69 0 1.32.32 1.74.85l2.53 3.56 4.37-2.28c.76-.4 1.68-.24 2.31.4.63.64.78 1.55.4 2.31L16.39 15.44z"/>
+            </svg>
+            Telegram
+        </a>
+
+        <a href="https://youtube.com/@Neko1ay" class="link" target="_blank">
+            <svg class="link-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M10 15.568v-5.053L15.82 14 10 17.382V15.568zm11.961-6.33a2.865 2.865 0 0 0-2.019-2.02c-1.631-.402-8.118-.402-8.118-.402s-6.487 0-8.118.402A2.865 2.865 0 0 0 1.687 9.238c-.418 1.63-.418 4.918-.418 4.918s0 3.288.418 4.918c.362 1.409 1.574 2.019 2.019 2.019 1.631.403 8.118.403 8.118.403s6.487 0 8.118-.402a2.865 2.865 0 0 0 2.019-2.02c.418-1.63.418-4.919.418-4.919s0-3.288-.418-4.918zM9.816 15.568V17.38l5.438-3.182c.293-.17.293-.588 0-.757L9.816 10.258v1.813L13.544 14l-3.728 2.168z"/>
+            </svg>
+            YouTube
+        </a>
+
+        <a href="https://www.twitch.tv/neko1ay" class="link" target="_blank">
+            <svg class="link-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3.853 0L1.276 2.573v14.26h5.147v3.862l3.862-3.862h3.862l3.862-3.862V0H3.853zm14.84 11.607H14.83V7.744h3.863v3.863zm-5.147 0H9.683V7.744h3.863v3.863zm6.433-11.607H4.632L10 5.368h10.653V0zm-1.287 11.607h-2.573v3.862l-2.573-2.573v-1.289H7.744V7.744h6.433v5.146z"/>
+            </svg>
+            Twitch
+        </a>
+
+        <a href="https://github.com/Sileeighty" class="link" target="_blank">
+            <svg class="link-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2z"/>
+            </svg>
+            GitHub
+        </a>
+
+        <a href="mailto:nasxnik@gmail.com" class="link">
+            <svg class="link-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+            Mail: nasxnik@gmail.com
+        </a>
+
+        <div class="footer">
+            Neko1ay • 2026
+        </div>
+    </div>
+
+    <!-- Кнопка настроек -->
+    <button class="settings-toggle" id="settingsToggle">
+        ⚙️
+    </button>
+
+    <!-- Модальное окно настроек -->
+    <div class="settings-modal" id="settingsModal">
+        <div class="settings-panel">
+            <div class="settings-header">
+                <div class="settings-title">Настройки</div>
+                <button class="settings-close" id="settingsClose">×</button>
+            </div>
+
+            <div class="settings-section">
+                <label class="settings-label">Тема</label>
+                <label class="theme-toggle">
+                    <span class="theme-label">🌙 Темная / ☀️ Светлая</span>
+                    <label class="theme-switch">
+                        <input type="checkbox" id="themeSwitch">
+                        <span class="theme-slider"></span>
+                    </label>
+                </label>
+            </div>
+
+            <div class="settings-section">
+                <label class="settings-label">Фоновое изображение</label>
+                <label class="background-upload">
+                    📁 Выбрать изображение с устройства
+                    <input type="file" id="backgroundInput" accept="image/*">
+                </label>
+                <div class="background-preview">
+                    <span class="background-preview-label">Предпросмотр:</span>
+                    <div class="background-preview-image" id="backgroundPreview"></div>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <button class="reset-button" id="resetButton">🔄 Сбросить настройки</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const settingsToggle = document.getElementById('settingsToggle');
+        const settingsModal = document.getElementById('settingsModal');
+        const settingsClose = document.getElementById('settingsClose');
+        const themeSwitch = document.getElementById('themeSwitch');
+        const backgroundInput = document.getElementById('backgroundInput');
+        const backgroundPreview = document.getElementById('backgroundPreview');
+        const backgroundImage = document.getElementById('backgroundImage');
+        const resetButton = document.getElementById('resetButton');
+        const body = document.body;
+        const avatar = document.querySelector('.avatar');
+
+        // Блокируем контекстное меню на аватаре
+        avatar.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            return false;
+        });
+
+        // Блокируем перетаскивание аватара
+        avatar.addEventListener('dragstart', (e) => {
+            e.preventDefault();
+            return false;
+        });
+
+        // Load settings from localStorage on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSettings();
+        });
+
+        // Toggle settings modal
+        settingsToggle.addEventListener('click', () => {
+            settingsModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        settingsClose.addEventListener('click', () => {
+            settingsModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        // Close modal on outside click
+        settingsModal.addEventListener('click', (e) => {
+            if (e.target === settingsModal) {
+                settingsModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Theme switch
+        themeSwitch.addEventListener('change', () => {
+            if (themeSwitch.checked) {
+                body.classList.add('light');
+                saveSetting('theme', 'light');
+            } else {
+                body.classList.remove('light');
+                saveSetting('theme', 'dark');
+            }
+        });
+
+        // Background image upload
+        backgroundInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                
+                reader.onload = function(event) {
+                    const imageUrl = event.target.result;
+                    
+                    // Set background
+                    backgroundImage.style.backgroundImage = `url(${imageUrl})`;
+                    backgroundImage.classList.add('active');
+                    
+                    // Set preview
+                    backgroundPreview.style.backgroundImage = `url(${imageUrl})`;
+                    backgroundPreview.classList.add('active');
+                    
+                    // Save to localStorage
+                    saveSetting('background', imageUrl);
+                };
+                
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Reset settings
+        resetButton.addEventListener('click', () => {
+            if (confirm('Сбросить все настройки на значения по умолчанию?')) {
+                // Reset theme
+                themeSwitch.checked = false;
+                body.classList.remove('light');
+                localStorage.removeItem('link_theme');
+                
+                // Reset background
+                backgroundImage.classList.remove('active');
+                backgroundImage.style.backgroundImage = '';
+                backgroundPreview.classList.remove('active');
+                backgroundPreview.style.backgroundImage = '';
+                localStorage.removeItem('link_background');
+                
+                // Reset file input
+                backgroundInput.value = '';
+                
+                alert('Настройки сброшены!');
+            }
+        });
+
+        // Save setting to localStorage
+        function saveSetting(key, value) {
+            localStorage.setItem(`link_${key}`, value);
+        }
+
+        // Load settings from localStorage
+        function loadSettings() {
+            // Load theme
+            const savedTheme = localStorage.getItem('link_theme');
+            if (savedTheme === 'light') {
+                body.classList.add('light');
+                themeSwitch.checked = true;
+            }
+            
+            // Load background
+            const savedBackground = localStorage.getItem('link_background');
+            if (savedBackground) {
+                backgroundImage.style.backgroundImage = `url(${savedBackground})`;
+                backgroundImage.classList.add('active');
+                backgroundPreview.style.backgroundImage = `url(${savedBackground})`;
+                backgroundPreview.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
